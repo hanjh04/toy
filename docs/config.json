@@ -1,0 +1,12 @@
+{
+    "title": "Lingi-log",
+    "description": "Welcome!",
+    "logo": "/thumbnail.png",
+    "footer": "jh",
+    "navigation": [
+        { "text": "Posts", "link": "/posts/", "position": "left", "external": false },
+        { "text": "foo", "link": "/foo/", "position": "left", "external": false },
+        { "text": "Say hi!", "link": "mailto:hanjh04@gmail.com", "position": "right", "external": true },
+        { "text": "About", "link": "/About", "position": "right", "external": false }
+    ]
+}

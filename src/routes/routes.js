@@ -8,6 +8,9 @@ import Icons from "@/pages/Icons.vue";
 import Maps from "@/pages/Maps.vue";
 import Notifications from "@/pages/Notifications.vue";
 import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
+import Book from "@/pages/Book.vue";
+import Server from "@/pages/Server.vue";
+import store from '../store/index.js';
 
 const routes = [{
     path: "/",
@@ -26,12 +29,17 @@ const routes = [{
         {
             path: "book",
             name: "Book Management",
-            component: UserProfile
+            component: Book,
+            beforeEnter(routeTo, routeFrom, next) {
+                store.dispatch('FETCH_BOOKLIST')
+                    .then(() => next())
+                    .catch(() => console.log('load booklist fail'))
+            }
         },
         {
             path: "server",
             name: "Server Management",
-            component: UserProfile
+            component: Server
         },
         {
             path: "table",
