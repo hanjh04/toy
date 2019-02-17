@@ -10,7 +10,7 @@ import Notifications from "@/pages/Notifications.vue";
 import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 import Book from "@/pages/Book.vue";
 import Server from "@/pages/Server.vue";
-import store from '../store/index.js';
+import store from "../store/index.js";
 
 const routes = [{
     path: "/",
@@ -34,7 +34,22 @@ const routes = [{
                 store.dispatch('FETCH_BOOKLIST')
                     .then(() => next())
                     .catch(() => console.log('load booklist fail'))
-            }
+            },
+            children: [{
+                path: '',
+                // component: BookListComponent,,
+                name: 'bookList',
+            }, {
+                path: 'bookInfo',
+                // component: BookDetailComponent,
+                // component: Book,
+                name: 'bookAdd'
+            }, {
+                path: ':idx',
+                // component: BookDetailComponent,
+                name: 'bookInfo',
+
+            }]
         },
         {
             path: "server",

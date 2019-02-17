@@ -19,6 +19,9 @@ export default {
     tableHeaderColor: {
       type: String,
       default: ""
+    },
+    abcd:{
+
     }
   },
   data() {

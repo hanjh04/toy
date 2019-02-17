@@ -7,12 +7,18 @@ import StatsCard from "./Cards/StatsCard.vue";
 import NavTabsTable from "./Tables/NavTabsTable.vue";
 import OrderedTable from "./Tables/OrderedTable.vue";
 import SimpleTable from "./Tables/SimpleTable.vue";
+import BookListTable from "./Tables/BookListTable.vue";
+
+// Forms
+import BookInfoForm from "./Form/BookInfoForm.vue";
 
 export {
-  ChartCard,
-  NavTabsCard,
-  StatsCard,
-  NavTabsTable,
-  OrderedTable,
-  SimpleTable
+    ChartCard,
+    NavTabsCard,
+    StatsCard,
+    NavTabsTable,
+    OrderedTable,
+    SimpleTable,
+    BookListTable,
+    BookInfoForm
 };
