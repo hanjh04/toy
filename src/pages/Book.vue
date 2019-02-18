@@ -36,36 +36,37 @@ import { BookListTable, BookInfoForm } from "@/components";
 // import {  } from "/@components";
 
 export default {
-    data(){
-      return {
-        showList:true
-      }
-    },
-    components:{
-        BookListTable,
-        BookInfoForm
-    },
-    computed:{
-        ...mapGetters(['fetchedBookList']),
-    },
-    created(){
-      console.log('created')
-    },
-    beforeUpdate() {
-      console.log('before update')
-    },
-    watch:{
-      $route(to, from){
-        console.log(to, from)
-        if(to.path === "/book/addBook"){
-          this.showList = false;
-          console.log(this.showList)
-        }else if(to.path === "/book/"){
-          this.showList = true;
-          console.log('tp.path = /book')
-        }
+  data(){
+    return {
+      showList:true
+    }
+  },
+  components:{
+      BookListTable,
+      BookInfoForm
+  },
+  computed:{
+      ...mapGetters(['fetchedBookList']),
+  },
+  created(){
+    if(this.$route.name === 'bookInfo' || this.$route.name === 'bookDetail'){
+      this.showList = false;
+    }
+    console.log(this.$route)
+  },
+  beforeUpdate() {
+    console.log('before update')
+  },
+  watch:{
+    $route(to, from){
+      console.log(to, from)
+      if(this.$route.name === 'bookInfo' || this.$route.name === 'bookDetail'){
+        this.showList = false;
+      }else{
+        this.showList = true;
       }
     }
+  }
 }
 </script>
 

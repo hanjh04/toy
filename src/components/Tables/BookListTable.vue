@@ -35,13 +35,13 @@
                 <md-chip v-for="keyword in item.keywords" :key="keyword">{{keyword}}</md-chip>
             </md-table-cell>
             <md-table-cell md-label="Owner" md-sort-by="Owner">{{item.owner}}</md-table-cell>
-            <md-table-cell md-label="BuyDate" md-sort-by="BuyDate">{{item.buyDate.seconds}}</md-table-cell>
+            <md-table-cell md-label="BuyDate" md-sort-by="BuyDate">{{item.buyDate}}</md-table-cell>
         </md-table-row>
     </md-table>
 
     <div>
-      <md-button>Add</md-button>
-      <md-button>Delete</md-button>
+      <md-button @click="addNewBook()">Add</md-button>
+      <md-button @click="deleteSelectedBook()">Delete</md-button>
     </div>
 </div>
 </template>
@@ -99,10 +99,19 @@ export default {
         },
         addNewBook(){
             console.log('addNewBook clicked')
+            this.$router.push('/book/addBook')
         },
         deleteSelectedBook(){
             console.log('delete book btn is clicked');
             console.log(this.selected)
+            if(this.selected.length === 0) {
+                alert('Select at least 1');
+                return;
+            }
+            var result = confirm('정말 지우시겠습니까?');
+            if(result){
+                
+            }
         }
     }
 }

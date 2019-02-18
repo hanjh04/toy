@@ -47,8 +47,12 @@ const routes = [{
             }, {
                 path: ':idx',
                 // component: BookDetailComponent,
-                name: 'bookInfo',
-
+                name: 'bookDetail',
+                beforeEnter(to, from, next) {
+                    store.dispatch('FETCH_BOOKDETAIL', to.params.idx.toString())
+                        .then(() => next())
+                        .catch(() => console.log('load book detail fail'));
+                }
             }]
         },
         {
