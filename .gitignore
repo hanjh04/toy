@@ -77,3 +77,4 @@ typings/
 
 
 docs/.vuepress/dist
+DB/dbConfig.js
