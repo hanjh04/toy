@@ -4,7 +4,7 @@
         <div class="md-layout-item md-small-size-100 md-size-50">
             <md-field>
                 <label>Title</label>
-                <md-input class="bookInfo title" v-model="bookInfo.title" md-counter="30" disabled></md-input>
+                <md-input class="bookInfo title" v-model="bookInfo.title" md-counter="30"></md-input>
             </md-field>
         </div>
         <div class="md-layout-item md-small-size-100 md-size-50">
@@ -20,35 +20,35 @@
             </md-field>
         </div>
         <div class="md-layout-item md-small-size-100 md-size-100">
+            <md-chips md-placeholder="Add keywords..."></md-chips>
+        </div>
+        <md-field class="md-layout-item md-small-size-100 md-size-50">
+            <label>Only images</label>
+            <md-file class="bookInfo image" accept="image/*" />
+            <!-- <md-file v-model="single" accept="image/*" /> -->
+        </md-field>
+        <div class="md-layout-item md-small-size-100 md-size-50">
+            <div id="imgArea" ></div>
+        </div>
+        <div class="md-layout-item md-small-size-100 md-size-50">
             <!-- <md-datepicker v-model="selectedDate" md-immediately /> -->
-            <md-datepicker md-immediately v-model="bookInfo.buyDate">
+            <md-datepicker class="bookInfo date" md-immediately v-model="bookInfo.buyDate">
                 <label>Select date</label>
             </md-datepicker>
         </div>
         <div class="md-layout-item md-small-size-100 md-size-100">
-            <md-chips md-placeholder="Add keywords..."></md-chips>
-        </div>
-        <md-field>
-            <label>Only images</label>
-            <md-file accept="image/*" />
-            <div class="col-sm-10">
-                <div id="imgArea" ></div>
-            </div>
-            <!-- <md-file v-model="single" accept="image/*" /> -->
-        </md-field>
-        <div class="md-layout-item md-small-size-100 md-size-100">
             <md-field>
                 <label>요약</label>
-                <md-textarea v-model="textarea" md-counter="80"></md-textarea>
+                <md-textarea class="bookInfo comment" v-model="textarea" md-counter="80"></md-textarea>
             </md-field>
         </div>
     </div>
-    <div class="btnGroup save">
-        <md-button @click="saveBookInfo()">Save</md-button>
+    <div v-if="$route.name === 'addBook'" class="btnGroup save">
+        <md-button @click="save()">Save</md-button>
         <md-button>Cancel</md-button>
     </div>
-    <div class="btnGroup edit">
-        <md-button @click="saveBookInfo()">Edit</md-button>
+    <div v-else class="btnGroup edit">
+        <md-button @click="onClickEditBtn()">Edit</md-button>
         <md-button>Cancel</md-button>
     </div>
 </div>
@@ -76,31 +76,31 @@ data: () => ({
             publisher:"",
             owner:"",
             idx:new Number(),
-            buyDate:"2019-02-16"
+            buyDate:""
         },
         bookImage:new Image(),
         bookImageBlob:new Blob()
     }),
     created() {
-        console.log('created')
-        if(this.$route.params !== undefined && this.$route.params.idx !== undefined){
-            
-        }else{
-            this.initBookinfo();
-        }
-
+        console.log('created');
         reader.onload = this.fileReaderOnLoad;
-        this.setBookInfo(this.fetchedBookDetail)
+        this.setBookInfo(this.fetchedBookDetail || this.bookInfo);
+    },
+    mounted() {
+        this.toggle();
     },
     watch: {
         fetchedImage:function() {
             if(this.fetchedImage.size === 0) return;
             this.bookImageBlob = this.fetchedImage;
             this.displayImage(this.bookImageBlob);
+        },
+        $route(to, from){
+            this.toggle();
         }
     },
     computed: {
-         ...mapGetters(['fetchedBookDetail','fetchedImage'])
+         ...mapGetters(['fetchedBookDetail','fetchedImage', 'fetchedBookList'])
     },
     methods:{
         ...mapMutations({initBookinfo:'INIT_BOOKINFO'}),
@@ -126,15 +126,29 @@ data: () => ({
                     .catch((error) => console.log(error))
             }
         },
+        onClickEditBtn(){
+            this.$router.push({
+                path:'/book/addBook'
+            })
+        },
         toggle(){
-            this.isAddPage = !this.isAddPage;
-            console.log(document.getElementById('imgFile'))
+            const el = document.getElementsByClassName('bookInfo')
+            if(this.$route.name === 'addBook'){
+                for(var i = 0; i < el.length; i++){
+                    el[i].removeAttribute('disabled', true);
+                }
+            }else if(this.$route.name === 'bookDetail'){
+                for(var i = 0; i < el.length; i++){
+                    el[i].setAttribute('disabled', true);
+                }
+            }
         },
         fileReaderOnLoad(e){
             this.bookImage.src = e.target.result;
 
-            if (this.bookImage.width > 300) {
-                this.bookImage.width = 300;
+            if (this.bookImage.height > 300) {
+                this.bookImage.height = 300;
+                this.bookImage.width = 'auto';
             }
             
             this.setImage(this.bookImage)
@@ -149,14 +163,10 @@ data: () => ({
             imgArea.appendChild(img);
             imgArea.firstElementChild.classList.add("img-thumbnail");
         },
-        saveBookInfo(){
+        save(){
             if(this.bookInfo.title === undefined || this.bookInfo.title === ''){
                 alert('책 제목을 입력하세요');
                 return;
-            }
-            if(this.bookInfo.buyDate === undefined || this.bookInfo.buyDate === ''){
-                alert('Buy Date 가 오늘로 설정되었습니다.')
-                this.bookInfo.buyDate = new Date().toISOString().split("T")[0];
             }
             // console.log(this.bookInfo)
             this.bookInfo.idx = this.fetchedBookList[this.fetchedBookList.length-1].idx + 1;
@@ -169,32 +179,29 @@ data: () => ({
                 .then(res => {
                     const imgUrl = res;
                     this.bookInfo.imgUrl = imgUrl;
-                    saveBookInfo(this.bookInfo)
-                    this.$router.replace(this.$route.query.redirect || '/')
                 })
                 .catch(error => {
                     alert('저장 실패!')
                     console.log(error)
+                    return;
                 })
-                return;
             }
             saveBookInfo(this.bookInfo)
             .then(res => {
                 this.$router.replace(this.$route.query.redirect || '/')
             })
             .catch(error => {
+                alert('저장 실패!')
                 console.log(error)
             })
-            // saveBookInfo({"idx":4,"title":"Head First Design Patterns","author":"에릭프리먼","imgUrl":"https://firebasestorage.googleapis.com/v0/b/my-web-e191b.appspot.com/o/123104887.jpg?alt=media&token=529d6d78-e70c-448f-a50f-4f5cd7b0b0b3"});
-            // console.log(JSON.stringify(this.bookInfo))
-        },
+        }
     }
 }
 </script>
 
 <style>
-#imgArea{
+/* #imgArea{
     height:250px;
     width:auto;
-}
+} */
 </style>

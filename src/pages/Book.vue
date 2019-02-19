@@ -52,15 +52,13 @@ export default {
     if(this.$route.name === 'bookInfo' || this.$route.name === 'bookDetail'){
       this.showList = false;
     }
-    console.log(this.$route)
   },
   beforeUpdate() {
     console.log('before update')
   },
   watch:{
     $route(to, from){
-      console.log(to, from)
-      if(this.$route.name === 'bookInfo' || this.$route.name === 'bookDetail'){
+      if(this.$route.name === 'addBook' || this.$route.name === 'bookDetail'){
         this.showList = false;
       }else{
         this.showList = true;

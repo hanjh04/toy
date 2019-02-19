@@ -27,7 +27,7 @@
         </md-table-empty-state>
       
 
-        <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select @click="onClickRow($event)">
+        <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" :idx="item.idx" md-auto-select @click="onClickRow($event)">
             <md-table-cell md-label="Title" md-sort-by="Title">{{item.title}}</md-table-cell>
             <md-table-cell md-label="Image" md-sort-by="Image"><img :src="item.imgUrl" alt="no image" style="height:100px;width:auto;"/></md-table-cell>
             <md-table-cell md-label="Publisher" md-sort-by="Publisher">{{item.publisher}}</md-table-cell>
@@ -90,9 +90,10 @@ export default {
             return `${count} books${plural} selected`
         },
         onClickRow(e){
-            console.log(e);
-            e.stopPropagation();
-            e.preventDefault();
+            if(e.target.parentNode.getAttribute('idx') === null){
+                return;
+            }
+            this.$router.push('/book/'+e.target.parentNode.getAttribute('idx'))
         },
         searchOnTable () {
             this.searched = searchByName(this.bookInfoList, this.search)

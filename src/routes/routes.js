@@ -40,10 +40,10 @@ const routes = [{
                 // component: BookListComponent,,
                 name: 'bookList',
             }, {
-                path: 'bookInfo',
+                path: 'addBook',
                 // component: BookDetailComponent,
                 // component: Book,
-                name: 'bookAdd'
+                name: 'addBook'
             }, {
                 path: ':idx',
                 // component: BookDetailComponent,
