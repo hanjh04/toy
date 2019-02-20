@@ -22,15 +22,15 @@
         <div class="md-layout-item md-small-size-100 md-size-100">
             <md-chips md-placeholder="Add keywords..."></md-chips>
         </div>
-        <md-field class="md-layout-item md-small-size-100 md-size-50">
+        <div class="md-layout-item md-small-size-100 md-size-50">
+            <div id="imgArea"></div>
+        </div>
+        <md-field class="md-layout-item md-small-size-100 md-size-100">
             <label>Only images</label>
-            <md-file class="bookInfo image" accept="image/*" />
+            <md-file class="bookInfo image" id="imgFile" accept="image/*" @change="displayImage($event.target.files[0])"/>
             <!-- <md-file v-model="single" accept="image/*" /> -->
         </md-field>
-        <div class="md-layout-item md-small-size-100 md-size-50">
-            <div id="imgArea" ></div>
-        </div>
-        <div class="md-layout-item md-small-size-100 md-size-50">
+        <div class="md-layout-item md-small-size-100 md-size-100">
             <!-- <md-datepicker v-model="selectedDate" md-immediately /> -->
             <md-datepicker class="bookInfo date" md-immediately v-model="bookInfo.buyDate">
                 <label>Select date</label>
@@ -39,17 +39,17 @@
         <div class="md-layout-item md-small-size-100 md-size-100">
             <md-field>
                 <label>요약</label>
-                <md-textarea class="bookInfo comment" v-model="textarea" md-counter="80"></md-textarea>
+                <md-textarea class="bookInfo comment" md-counter="80" v-model="bookInfo.comment"></md-textarea>
             </md-field>
         </div>
     </div>
     <div v-if="$route.name === 'addBook'" class="btnGroup save">
-        <md-button @click="save()">Save</md-button>
-        <md-button>Cancel</md-button>
+        <md-button @click="onClickSaveBtn()">Save</md-button>
+        <md-button @click="onClickCancelBtn()">Cancel</md-button>
     </div>
     <div v-else class="btnGroup edit">
         <md-button @click="onClickEditBtn()">Edit</md-button>
-        <md-button>Cancel</md-button>
+        <!-- <md-button >Cancel</md-button> -->
     </div>
 </div>
 </template>
@@ -105,7 +105,7 @@ data: () => ({
     methods:{
         ...mapMutations({initBookinfo:'INIT_BOOKINFO'}),
         ...mapActions({saveBookInfo:'SAVE_BOOKINFO', saveBookImage:'SAVE_BOOKIMAGE'}),
-        setBookInfo({title, owner, author, content, subject, imgUrl, buyDate, publisher}){
+        setBookInfo({title, owner, author, content, subject, imgUrl, buyDate, publisher, comment}){
             this.bookInfo.title = title || '';
             this.bookInfo.buyer = owner || '';
             this.bookInfo.content = content || '';
@@ -113,6 +113,7 @@ data: () => ({
             this.bookInfo.imgUrl = imgUrl || '';
             this.bookInfo.author = author || '';
             this.bookInfo.publisher = publisher || '';
+            this.bookInfo.comment = comment || '';
             
             if(buyDate === undefined || buyDate === ""){
                 this.bookInfo.buyDate = new Date().toISOString().split("T")[0];
@@ -163,39 +164,49 @@ data: () => ({
             imgArea.appendChild(img);
             imgArea.firstElementChild.classList.add("img-thumbnail");
         },
-        save(){
+        onClickSaveBtn(){
             if(this.bookInfo.title === undefined || this.bookInfo.title === ''){
                 alert('책 제목을 입력하세요');
                 return;
             }
             // console.log(this.bookInfo)
             this.bookInfo.idx = this.fetchedBookList[this.fetchedBookList.length-1].idx + 1;
-            this.bookInfo.buyDate = new Date(this.bookInfo.buyDate);
+            this.bookInfo.buyDate = new Date(this.bookInfo.buyDate).toISOString().split('T')[0];
             if(document.getElementById('imgFile').files !== undefined && document.getElementById('imgFile').files[0] !== undefined){
-            //     save image... return 받고 
-                console.log('image save')
+                // save image... return 받고 
                 const file = document.getElementById('imgFile').files[0];
                 this.saveBookImage({file})
                 .then(res => {
                     const imgUrl = res;
                     this.bookInfo.imgUrl = imgUrl;
+                    saveBookInfo(this.bookInfo)
+                    this.$router.push('/book')
                 })
                 .catch(error => {
                     alert('저장 실패!')
                     console.log(error)
-                    return;
                 })
+                return;
             }
             saveBookInfo(this.bookInfo)
             .then(res => {
-                this.$router.replace(this.$route.query.redirect || '/')
+                this.$router.push('/book')
             })
             .catch(error => {
                 alert('저장 실패!')
                 console.log(error)
             })
+        },
+        onClickCancelBtn(){
+            const rtn = confirm('입력한 데이터가 초기화됩니다.')
+            if(rtn){
+                this.setBookInfo(this.fetchedBookDetail);
+            }
         }
-    }
+    },
+    beforeDestroy() {
+        this.$store.commit("INIT_BOOKINFO")
+    },
 }
 </script>
 

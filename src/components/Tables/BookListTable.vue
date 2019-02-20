@@ -41,12 +41,14 @@
 
     <div>
       <md-button @click="addNewBook()">Add</md-button>
-      <md-button @click="deleteSelectedBook()">Delete</md-button>
+      <md-button @click="onClickDeleteBtn()">Delete</md-button>
     </div>
 </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 const toLower = text => {
     return text.toString().toLowerCase()
 }
@@ -77,6 +79,7 @@ export default {
         this.searched = this.bookInfoList;
     },
     methods:{
+        ...mapActions({deleteBookInfo:'DELETE_BOOKINFO'}),
         onSelect (items) {
             this.selected = items
         },
@@ -102,7 +105,7 @@ export default {
             console.log('addNewBook clicked')
             this.$router.push('/book/addBook')
         },
-        deleteSelectedBook(){
+        onClickDeleteBtn(){
             console.log('delete book btn is clicked');
             console.log(this.selected)
             if(this.selected.length === 0) {
@@ -111,7 +114,25 @@ export default {
             }
             var result = confirm('정말 지우시겠습니까?');
             if(result){
-                
+                this.selected.forEach(item => {
+                    console.log(item)
+                    this.deleteBookInfo(item.idx)
+                        .then(() => {
+                            // this.$router.push({
+
+                            // })
+                            this.$router.replace(this.$router.path || '/book');
+                        })
+                })
+            }
+        },
+        delBookInfo(){
+            if(this.itemIdx.length === 0){
+                alert('click at least one item')
+            }else{
+                const res = confirm('really want to delete this row?')
+                if(res){
+                }
             }
         }
     }
