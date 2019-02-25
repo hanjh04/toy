@@ -74,7 +74,7 @@ module.exports = {
                 title: '블로그 개발기',
                 collapsable: false,
                 children: [
-                    'index'
+                    '블로그_개발기'
                 ]
             }, {
                 title: '책 관리 시스템',
