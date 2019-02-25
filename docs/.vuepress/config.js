@@ -76,6 +76,17 @@ module.exports = {
                 children: [
 
                 ]
+            }, {
+                title: '책 관리 시스템',
+                collapsable: true,
+                children: [
+                    'book_1_도서_관리_시스템',
+                    'book_2_소스_구조',
+                    'book_3_routing',
+                    'book_4_vuex_상태관리',
+                    'book_5_component_설명',
+                    'book_6_기능_설명'
+                ]
             }],
             // fallback
             '/': []
