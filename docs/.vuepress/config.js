@@ -72,13 +72,13 @@ module.exports = {
             }],
             '/blog/': [{
                 title: '블로그 개발기',
-                collapsable: false,
+                collapsable: true,
                 children: [
-                    '블로그_개발기'
+                    'blog_개발기'
                 ]
             }, {
                 title: '책 관리 시스템',
-                collapsable: true,
+                collapsable: false,
                 children: [
                     'book_1_도서_관리_시스템',
                     'book_2_소스_구조',
@@ -89,7 +89,7 @@ module.exports = {
                 ]
             }, {
                 title: '서버 관리 시스템',
-                collapsable: false,
+                collapsable: true,
                 children: []
             }],
             // fallback
