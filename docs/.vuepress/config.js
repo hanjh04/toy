@@ -74,7 +74,7 @@ module.exports = {
                 title: '블로그 개발기',
                 collapsable: false,
                 children: [
-
+                    'index'
                 ]
             }, {
                 title: '책 관리 시스템',
@@ -87,6 +87,10 @@ module.exports = {
                     'book_5_component_설명',
                     'book_6_기능_설명'
                 ]
+            }, {
+                title: '서버 관리 시스템',
+                collapsable: false,
+                children: []
             }],
             // fallback
             '/': []
