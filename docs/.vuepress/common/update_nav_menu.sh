@@ -1,28 +1,32 @@
 #!/bin/bash
 
-BASE_DIR="/Users/hanjangho/Documents/GitHub/toy/docs/"
-CONFIG_FILE_DIR=${BASE_DIR}".vuepress"
+BASE_DIR="../../"
+CONFIG_FILE_DIR=${BASE_DIR}".vuepress/"
+CONFIG_FILE=${CONFIG_FILE_DIR}"tmp_config.js"
 IGNORE_DIR="public"
-FOLDERS=`ls -l ${BASE_DIR} | grep ^d | awk '{print $9}'`
 
+FOLDERS=`ls -l ${BASE_DIR} | grep ^d | awk '{print $9}'`
 for folder in ${FOLDERS}
 do
-    if [ "${folder}" != "${IGNORE_DIR}" ];
+    if [ "${folder}" != "public" ];
+    # if [ "${folder}" != "${IGNORE_DIR}" ];
     then
         TARGET_DIR=${BASE_DIR}${folder}"/"
         FILE_NAMES=`ls -l ${TARGET_DIR} | grep ^- | awk '{print $9}'`
         for FILE_NAME_WITH_EXT in ${FILE_NAMES}
         do
-            # echo ${FILE_NAME_WITH_EXT}
-            # echo ${FILE_NAME_WITH_EXT_SPLIT[0]}
-            OIFS=$IFS;IFS='.';FILE_NAME_WITH_EXT_SPLIT=$FILE_NAME_WITH_EXT
+            # split FILE_NAME_WITH_EXT and get FILE_NAME and EXT
+            OIFS=$IFS;IFS=.;FILE_NAME_WITH_EXT_SPLIT=($FILE_NAME_WITH_EXT);IFS=$OIFS
             FILE_NAME=${FILE_NAME_WITH_EXT_SPLIT[0]}
             EXT=${FILE_NAME_WITH_EXT_SPLIT[1]}
-            OIFS=$IFS;IFS='-';FILE_NM_SPLIT=${FILE_NAME_WITH_EXT_SPLIT[0]}
+
+            # split FILE_NAME and get SUB_MENU
+            OIFS=$IFS;IFS=-;FILE_NM_SPLIT=(${FILE_NAME});IFS=$OIFS
             SUB_MENU=${FILE_NM_SPLIT[0]}
 
-            # config.js 파일에서 sub_menu 찾아 그 위에 FileName 추가해 준다.
-                        
+            # add nav menu
+            sed -i ".bak" "/_${SUB_MENU}/i\\
+            '${FILE_NAME}'," tmp_config.js
         done
     fi
 done
