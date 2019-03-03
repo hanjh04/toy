@@ -17,6 +17,9 @@ npm add -D vuepress
 # vuepress dev
 ./node_modules/vuepress/bin/vuepress.js dev
 
+# nav bar 자동 추가
+/.vuepress/common/update_nav_menu.sh
+
 # build
 # vuepress build
 ./node_modules/vuepress/bin/vuepress.js build
@@ -41,7 +44,7 @@ idx|Todo|설명|add date|complete date
 6|메인 화면 꾸미기|메인 화면|01.08|01.13
 7|build & deploy 스크립트 작성|01.08|
 8|vuepress 파일들 디렉터리 이동||01.08|01.13
-9|스크립트 작성|자동으로 nav bar에 목록 추가 해주는 스크립트 작성|01.13|
+9|스크립트 작성|자동으로 nav bar에 목록 추가 해주는 스크립트 작성|01.13|03.03
 10|키워드 검색 기능|post에 작성해놓은 keyword들을 검색해주는 기능<br>통계내주는 기능|01.13|
 
 ---
