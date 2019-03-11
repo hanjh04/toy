@@ -4,7 +4,7 @@
 > 1937\
 > https://www.acmicpc.net/problem/1937
 
-## 문재
+## 문제
 ![문제](./images/boj_1937/1.png)
 
 ## 요약
