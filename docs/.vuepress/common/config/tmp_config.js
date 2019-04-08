@@ -28,21 +28,21 @@ module.exports = {
                 title: 'Others',
                 collapsable: false,
                 children: [
-'others-객체지향_5원칙','others-환경설정','others-update_alternatives_linux','others-docker_mongodb','others-angular_개념정리','others-190226_design_pattern_strategy_pattern','others-181230_macbook_환경설정','others-181230_docker_mongodb','others-181213_angular','others-181205_공부_Keywords','others-181205_vue_dynamic_component','others-181120_vue','others-181102_서버사이드랜더링and클라이언트사이드랜더링','others-181025_query튜닝','others-181025_glibc_update','others-181024_study','others-181013_암호화2','others-181013_network','others-180919_tomcat의_동작_방식','others-180918_yum','others-180917_암호화','others-180917_tree의_순회_방법','others-180917_https에_대해','others-180907_페이지_교체_알고리즘','others-180829_vscode_환경설정',                    //_others
+                    //_others
                 ]
             }],
             '/linux/': [{
                 title: 'Linux 운영',
                 collapsable: false,
                 children: [
-'linux-install_gcc_without_internet_connection','linux-OOM',                    //_linux운영
+                    //_linux운영
                 ]
             }],
             '/algorithm/': [{
                 title: 'Algorithm',
                 collapsable: false,
                 children: [
-'algorithm-index','algorithm-3_kakao_2018_2_1','algorithm-2_boj_dp_1937','algorithm-1_boj_1003',                    //_algorithm
+                    //_algorithm
                 ]
             }],
             '/db/': [{
@@ -56,13 +56,13 @@ module.exports = {
                 title: '블로그 개발기',
                 collapsable: true,
                 children: [
-'blog-개발기',                    //_blog
+                    //_blog
                 ]
             }, {
                 title: '책 관리 시스템',
                 collapsable: false,
                 children: [
-'book-6_기능_설명','book-5_component_설명','book-4_vuex_상태관리','book-3_routing','book-2_소스_구조','book-1_도서_관리_시스템',                    //_book
+                    //_book
                 ]
             }, {
                 title: '서버 관리 시스템',
