@@ -28,11 +28,11 @@ for folder in ${FOLDERS}; do
 
                 # find _${SUB_MENU| and insert behind
                 if [[ ${OSTYPE} == "darwin"* ]];then
-                    sed -i ".bak" "/_${SUB_MENU}/a\\
+                    sed -i ".bak" "/_${SUB_MENU}/i\\
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '${FILE_NAME}',
                     " ${CONFIG_FILE}
                 elif [[ "$OSTYPE" == "linux-gnu" ]];then
-                    sed -i ".bak" "/_${SUB_MENU}/a\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '${FILE_NAME}', " ${CONFIG_FILE}
+                    sed -i ".bak" "/_${SUB_MENU}/i\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '${FILE_NAME}', " ${CONFIG_FILE}
                 fi
             fi
         done
