@@ -56,7 +56,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { saveBookInfo } from '../../api';
+// import { saveBookInfo } from '../../api';
 const reader = new FileReader();
 
 export default {
@@ -179,7 +179,7 @@ data: () => ({
                 .then(res => {
                     const imgUrl = res;
                     this.bookInfo.imgUrl = imgUrl;
-                    saveBookInfo(this.bookInfo)
+                    this.saveBookInfo(this.bookInfo)
                     this.$router.push('/book')
                 })
                 .catch(error => {
@@ -188,7 +188,7 @@ data: () => ({
                 })
                 return;
             }
-            saveBookInfo(this.bookInfo)
+            this.saveBookInfo(this.bookInfo)
             .then(res => {
                 this.$router.push('/book')
             })

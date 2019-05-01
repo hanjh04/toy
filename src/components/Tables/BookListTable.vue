@@ -106,8 +106,6 @@ export default {
             this.$router.push('/book/addBook')
         },
         onClickDeleteBtn(){
-            console.log('delete book btn is clicked');
-            console.log(this.selected)
             if(this.selected.length === 0) {
                 alert('Select at least 1');
                 return;
@@ -126,15 +124,6 @@ export default {
                 })
             }
         },
-        delBookInfo(){
-            if(this.itemIdx.length === 0){
-                alert('click at least one item')
-            }else{
-                const res = confirm('really want to delete this row?')
-                if(res){
-                }
-            }
-        }
     }
 }
 </script>

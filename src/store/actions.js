@@ -42,10 +42,9 @@ export default {
             .catch(error => console.log(error))
     },
     SAVE_BOOKINFO(context, payload) {
-        console.log('SAVE_BOOKINFO : ', payload)
         return saveBookInfo(payload)
-            .then(res => {
-                console.log(res)
+            .then(() => {
+                context.commit('REFRESH_BOOKINFO', payload)
             })
             .catch(error => console.log(error))
     },
@@ -57,7 +56,6 @@ export default {
     DELETE_BOOKINFO(context, payload) {
         return deleteBookInfo(payload)
             .then(res => {
-                console.log(payload)
                 context.commit('DELETE_BOOKINFO', payload)
             }).catch(error => {
                 console.log(error)

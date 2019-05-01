@@ -13,11 +13,13 @@ export default {
         state.image = new Blob();
     },
     DELETE_BOOKINFO(state, idx) {
-        console.log('DELETE_BOOKINFO : ', idx)
         state.bookList.forEach((el, arrIdx) => {
             if (el.idx === idx) {
                 state.bookList.splice(arrIdx);
             }
         })
+    },
+    REFRESH_BOOKINFO(state, bookDetail) {
+        state.bookList.push(bookDetail);
     }
 }
